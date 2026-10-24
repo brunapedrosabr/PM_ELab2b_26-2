@@ -17,7 +17,7 @@ public class Personal extends Profissional {
      * Valor devido pelas aulas avulsas: aulasAvulsas × SALARIO_PERSONAL × FRACAO_AULA.
      */
     private double valorAulasAvulsas() {
-        return aulasAvulsas * SALARIO_PERSONAL * FRACAO_AULA;
+        return aulasAvulsas * SALARIO_PERSONAL * FRACAO_AULA; 
     }
 
     /**
@@ -25,9 +25,20 @@ public class Personal extends Profissional {
      * @return a quantidade efetiva de aulas avulsas após a operação
      */
     public double addAulaAvulsa(double quantidade) {
+        if(quantidade <= 0){
+            return aulasAvulsas;
+        }
+        else if((aulasAvulsas + quantidade) >= MAX_AULAS_AVULSAS){
+            return (double) MAX_AULAS_AVULSAS;
+        }
+        aulasAvulsas += quantidade;
+        return aulasAvulsas;
+        /*else{
+            aulasAvulsas += quantidade;
+            return aulasAvulsas;
+        }*/
         // TODO: se quantidade <= 0, não altera e devolve aulasAvulsas atual
         // TODO: soma quantidade, sem ultrapassar MAX_AULAS_AVULSAS; devolve o novo total
-        return 0.0;
     }
 
     /**
@@ -37,8 +48,11 @@ public class Personal extends Profissional {
      */
     @Override
     public double registrarPagamento() {
+        double total = SALARIO_PERSONAL + valorAulasAvulsas();
+        ultimoPagamento = total;
+        aulasAvulsas = 0.0;
+        return total;
         // TODO: calcular total, armazenar em ultimoPagamento, zerar aulasAvulsas e devolver o total
-        return 0.0;
     }
 
     @Override
